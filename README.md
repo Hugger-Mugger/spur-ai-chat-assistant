@@ -5,7 +5,7 @@ A production-ready, full-stack AI support chat widget built with Node.js, Expres
 ## 🔗 Live Deployment Links
 
 * **Frontend (Vercel):** https://spur-ai-chat-assistant.vercel.app/
-* **Backend (Render):** https://spur-ai-chat-assistant.onrender.com/
+* **Backend (Render):** https://spur-ai-chat-assistant.onrender.com
 
 ## 📊 Project Status
 
