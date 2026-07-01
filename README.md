@@ -200,7 +200,7 @@ Create `backend/.env`:
 DATABASE_URL="file:./dev.db"
 PORT=3001
 NODE_ENV=development
-GOOGLE_API_KEY="your-gemini-api-key-here"
+GROQ_API_KEY="your-gemini-api-key-here"
 ```
 
 **Note:** Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
@@ -422,7 +422,7 @@ Health check endpoint.
    ```
 4. Set environment variables in Render dashboard:
    - `DATABASE_URL` → Render PostgreSQL connection
-   - `GOOGLE_API_KEY` → Your Gemini API key
+   - `GROQ_API_KEY` → Your Groq API key
    - `NODE_ENV` → production
 5. Deploy
 
@@ -471,7 +471,7 @@ npm run build
 
 # Set environment variables
 export DATABASE_URL="postgresql://..."
-export GOOGLE_API_KEY="..."
+export GROQ_API_KEY="..."
 
 # Start with PM2
 npm install -g pm2
