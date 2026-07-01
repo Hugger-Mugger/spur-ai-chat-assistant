@@ -419,14 +419,17 @@ Health check endpoint.
 
 **Backend Deployment:**
 
+### Option 1: Render (Recommended)
+
+**Backend Deployment:**
+
 1. Push code to GitHub
 2. Connect repository to Render
-3. Configure build command:
-   ```bash
-   npm install && npm run build && npm run prisma:migrate
-   ```
+3. Configure deployment settings in Render dashboard:
+   - **Build Command:** `npm install && npx prisma generate && npm run build`
+   - **Start Command:** `npx prisma db push && npm start`
 4. Set environment variables in Render dashboard:
-   - `DATABASE_URL` → Render PostgreSQL connection
+   - `DATABASE_URL` → file:./dev.db (or your managed database URL)
    - `GROQ_API_KEY` → Your Groq API key
    - `NODE_ENV` → production
 5. Deploy
@@ -638,7 +641,7 @@ npm run build           # Should complete without errors
 - Message persistence and retrieval
 
 ### Sprint 2: LLM Integration ✅
-- Gemini-1.5-Flash API integration
+- Groq Cloud API integration
 - Multi-turn context awareness
 - Full conversation history on reload
 - Service-oriented architecture
