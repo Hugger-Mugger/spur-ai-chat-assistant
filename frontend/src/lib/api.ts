@@ -30,7 +30,7 @@ export interface ApiError {
 
 /**
  * Send a chat message to the backend
- * 🚀 FIX: Hated /api prefix kyunki Express routes straight hain
+ * 🚀 PRODUCTION FIX: Minifier glitch hatane ke liye clean explicit throw lagaya hai
  */
 export async function sendMessage(message: string, sessionId?: string): Promise<ChatResponse> {
   try {
@@ -56,20 +56,22 @@ export async function sendMessage(message: string, sessionId?: string): Promise<
 
     const data = (await response.json()) as ChatResponse;
     return data;
-  } catch (error) {
-    console.error('❌ Chat API error:', error);
-    throw error;
+  } catch (error: any) {
+    // 🚀 CRITICAL: Logs alag aur throw alag, koi linear chaining nahi taaki compiler pagal na bane
+    const errorString = error?.message || 'Unknown API Exception';
+    console.error('❌ Chat pipeline error trace:', errorString);
+    throw new Error(errorString);
   }
 }
 
 /**
  * Fetch conversation history for a given session
- * 🚀 FIX: Removed /api prefix and enhanced JSON parsing safety
+ * 🚀 PRODUCTION FIX: Empty fallback array to keep UI safe on initial mount
  */
 export async function getConversationHistory(sessionId: string): Promise<HistoryMessage[]> {
   try {
     if (!sessionId) {
-      throw new Error('Session ID is required');
+      return [];
     }
 
     const response = await fetch(`${API_BASE_URL}/chat/history/${sessionId}`, {
@@ -80,14 +82,14 @@ export async function getConversationHistory(sessionId: string): Promise<History
     });
 
     if (!response.ok) {
-      return []; // Crash karne ke bajay empty array return karo taaki Svelte safe rahe
+      return []; 
     }
 
     const data = (await response.json()) as HistoryMessage[];
     return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error('❌ History fetch error:', error);
-    return []; // Return empty array on network failure to prevent blank screen
+    console.warn('⚠️ History pipeline bypassed silently');
+    return []; 
   }
 }
 
