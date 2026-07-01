@@ -11,7 +11,16 @@ const app = express();
 const router = Router();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://spur-ai-chat-assistant.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
+// Handle CORS Preflight globally before any router
+app.options('*', cors());
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
