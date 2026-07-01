@@ -40,7 +40,7 @@ router.post(
 router.get('/chat/history/:sessionId', handleGetHistory);
 
 // Use router
-app.use('/api', router);
+app.use(/api, router);
 
 // 404 handler
 app.use((_req: Request, _res: Response, next: NextFunction) => {
