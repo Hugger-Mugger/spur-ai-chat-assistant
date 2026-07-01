@@ -2,6 +2,11 @@
 
 A production-ready, full-stack AI support chat widget built with Node.js, Express, SvelteKit, and Prisma. Features multi-turn LLM context awareness, lazy session management, and chronological message history retrieval.
 
+## 🔗 Live Deployment Links
+
+* **Frontend (Vercel):** https://spur-ai-chat-assistant.vercel.app/
+* **Backend (Render):** https://spur-ai-chat-assistant.onrender.com/
+
 ## 📊 Project Status
 
 | Phase | Status | Completion |
@@ -200,10 +205,10 @@ Create `backend/.env`:
 DATABASE_URL="file:./dev.db"
 PORT=3001
 NODE_ENV=development
-GROQ_API_KEY="your-gemini-api-key-here"
+GROQ_API_KEY="your-groq-api-key-here"
 ```
 
-**Note:** Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
+**Note:** Get your Groq API key from the [Groq Cloud Console](https://console.groq.com/keys)
 
 #### 3. Initialize Database
 
@@ -425,6 +430,8 @@ Health check endpoint.
    - `GROQ_API_KEY` → Your Groq API key
    - `NODE_ENV` → production
 5. Deploy
+
+**Note:** Get your Groq API key from the [Groq Cloud Console](https://console.groq.com/keys)
 
 **Frontend Deployment:**
 
@@ -702,7 +709,7 @@ For issues, questions, or feedback:
 - [Prisma ORM](https://www.prisma.io/docs/)
 - [Zod Validation](https://zod.dev/)
 - [Tailwind CSS](https://tailwindcss.com/docs/)
-- [Google Gemini API](https://ai.google.dev/)
+- [Groq Cloud Console](https://console.groq.com/keys)
 
 ---
 
