@@ -53,8 +53,8 @@ app.use(errorHandler);
 // Start server
 app.listen(config.port, () => {
   console.log(`🚀 Server running on http://localhost:${config.port}`);
-  console.log(`📊 Health check: http://localhost:${config.port}/health`);
-  console.log(`💬 Chat endpoint: POST http://localhost:${config.port}/chat/message`);
+  console.log(`📊 Health check: http://localhost:${config.port}/api/health`);
+  console.log(`💬 Chat endpoint: POST http://localhost:${config.port}/api/chat/message`);
 });
 
 export default app;
