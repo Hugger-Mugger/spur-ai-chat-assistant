@@ -1,0 +1,63 @@
+# Environment Files
+.env
+.env.local
+.env.production
+.env.staging
+.env.development
+.env.test
+
+# Database Files
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+dev.db
+prisma/dev.db
+
+# Dependencies
+node_modules/
+npm-debug.log*
+npm-error.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pnpm-error.log*
+lerna-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build Artifacts
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+
+# IDE & Editor Files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.swp
+*.swo
+*~
+.sublime-workspace
+.sublime-project
+*.iml
+
+# OS Files
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Misc
+jspm_packages/
+.eslintcache
+.prettierignore
