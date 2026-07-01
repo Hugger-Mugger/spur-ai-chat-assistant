@@ -3,7 +3,8 @@
  * Handles communication with the backend /chat/message endpoint
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+//const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+const API_BASE_URL = 'https://spur-ai-chat-assistant.onrender.com'
 
 export interface ChatRequest {
   message: string;
