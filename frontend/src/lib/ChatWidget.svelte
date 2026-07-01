@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
-  // 🚀 Step 1: Central api client se functions ko import karo
+  // 🚀 Perfect relative path
   import { sendMessage as sendApiMessage, getConversationHistory } from './api';
 
   // --- State Architecture via Svelte 5 Runes ---
@@ -28,22 +28,24 @@
     if (savedSession) {
       sessionId = savedSession;
       
-      // 🚀 Step 2: Purane localhost fetch ko hata kar type-safe API client use kiya
       try {
         const historyMessages = await getConversationHistory(savedSession);
         
-        // Map backend response to UI format
-        messages = historyMessages.map((msg: any) => ({
-          id: msg.id,
-          sender: msg.sender as 'USER' | 'AI',
-          text: msg.text,
-          timestamp: new Date(msg.timestamp)
-        }));
-        
-        console.log(`✅ Loaded ${messages.length} messages from conversation ${savedSession}`);
+        // 🚀 CRITICAL FIX: Fallback lagaya hai agar api array return na kare, taaki app crash na ho
+        if (historyMessages && Array.isArray(historyMessages)) {
+          messages = historyMessages.map((msg: any) => ({
+            id: msg.id || '',
+            sender: (msg.sender === 'USER' || msg.sender === 'AI') ? msg.sender : 'AI',
+            text: msg.text || '',
+            timestamp: msg.timestamp ? new Date(msg.timestamp) : new Date()
+          }));
+          console.log(`✅ Loaded ${messages.length} messages safely.`);
+        } else {
+          messages = [];
+        }
         
       } catch (error) {
-        console.warn('⚠️ Failed to fetch history from API, using empty state:', error);
+        console.warn('⚠️ Failed to fetch history safely:', error);
         messages = [];
       }
     }
@@ -63,35 +65,33 @@
   // --- Dispatch Message Pipeline ---
   async function sendMessage() {
     const cleanText = inputMessage.trim();
-    if (!cleanText || isAiTyping) return; // Lock check
+    if (!cleanText || isAiTyping) return;
 
-    // 1. Instantly push user message to UI
     messages.push({
       sender: 'USER',
       text: cleanText,
       timestamp: new Date()
     });
 
-    inputMessage = ''; // Clear input field instantly
-    isAiTyping = true;  // Trigger typing state & lock buttons
+    inputMessage = '';
+    isAiTyping = true;
     await scrollToBottom();
 
     try {
-      // 🚀 Step 3: Central api client ke call se fetch chain ko replace kar diya
       const data = await sendApiMessage(cleanText, sessionId || undefined);
 
-      // Update active session cache
-      if (data.sessionId) {
+      if (data && data.sessionId) {
         sessionId = data.sessionId;
         localStorage.setItem('spur_chat_session', data.sessionId);
       }
 
-      // Push real AI generated response to UI
-      messages.push({
-        sender: 'AI',
-        text: data.reply,
-        timestamp: new Date()
-      });
+      if (data && data.reply) {
+        messages.push({
+          sender: 'AI',
+          text: data.reply,
+          timestamp: new Date()
+        });
+      }
 
     } catch (error) {
       console.error('❌ Frontend pipeline capture:', error);
@@ -101,12 +101,11 @@
         timestamp: new Date()
       });
     } finally {
-      isAiTyping = false; // Release input lock
+      isAiTyping = false;
       await scrollToBottom();
     }
   }
 
-  // Handle Enter Keypress submission
   function handleKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       sendMessage();
