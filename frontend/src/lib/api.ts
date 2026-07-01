@@ -36,7 +36,7 @@ export interface ApiError {
  */
 export async function sendMessage(message: string, sessionId?: string): Promise<ChatResponse> {
   try {
-    const response = await fetch(`${API_BASE_URL}/chat/message`, {
+    const response = await fetch(`${API_BASE_URL}/api/chat/message`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export async function getConversationHistory(sessionId: string): Promise<History
       throw new Error('Session ID is required');
     }
 
-    const response = await fetch(`${API_BASE_URL}/chat/history/${sessionId}`, {
+    const response = await fetch(`${API_BASE_URL}/api/chat/history/${sessionId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export async function getConversationHistory(sessionId: string): Promise<History
  */
 export async function checkHealth(): Promise<boolean> {
   try {
-    const response = await fetch(`${API_BASE_URL}/health`);
+    const response = await fetch(`${API_BASE_URL}/api/health`);
     return response.ok;
   } catch {
     return false;
